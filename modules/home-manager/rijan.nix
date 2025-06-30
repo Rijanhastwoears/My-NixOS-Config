@@ -34,6 +34,7 @@
       fzf
       gccgo13
       gdb
+      gemini-cli
       gimp
       git
       ghostty
