@@ -34,7 +34,6 @@
       fzf
       gccgo13
       gdb
-      gemini-cli
       gimp
       git
       ghostty
@@ -84,6 +83,7 @@
       ripgrep
       rustc
       samba4Full
+      sbcl
       sioyek
       sox
       spotify
