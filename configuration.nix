@@ -22,6 +22,7 @@
       # --- Custom Packages (Consider Overlays) ---
       ./personal/plink2.nix
       ./personal/snpeff.nix
+      ./personal/edgetts.nix
       # --- Home Manager (if not handled in flake.nix) ---
       # ./modules/home-manager/rijan.nix
     ];

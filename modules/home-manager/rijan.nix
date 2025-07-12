@@ -26,6 +26,7 @@
       cargo
       clementine
       comma
+      csvlens
       duckdb
       emacs
       firefox
@@ -58,7 +59,6 @@
       libreoffice
       libsForQt5.kdenlive
       logseq
-      mailspring
       mercurial
       mermaid-cli
       monophony
@@ -67,6 +67,7 @@
       nim
       nimble
       nimlangserver
+      neovim
       nodePackages_latest.wrangler
       notcurses
       obs-studio

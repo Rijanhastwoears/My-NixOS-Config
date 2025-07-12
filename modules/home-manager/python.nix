@@ -18,14 +18,17 @@
       jupyterlab
       polars
       qtconsole
+      openpyxl
       newick
       ete3
+      pytesseract
       xlsx2csv
       flask
       sqlalchemy
       flask-sqlalchemy
       werkzeug
       flask-session
+      pdfminer-six
       pyqt6
     ]);
     
