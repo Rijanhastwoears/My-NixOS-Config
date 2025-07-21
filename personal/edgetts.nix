@@ -1,48 +1,38 @@
-# edge-tts.nix  –  single-file derivation for NixOS / home-manager
-# Usage:
-#   environment.systemPackages = [ (import ./edge-tts.nix { inherit pkgs; }) ];
-# or
-#   home.packages = [ (import ./edge-tts.nix { inherit pkgs; }) ];
+# personal/edgetts.nix
+{ config, lib, pkgs, ... }:
 
-{ pkgs }:
+{
+  environment.systemPackages = [
+    (let
+      py = pkgs.python312;
+    in
+    py.pkgs.buildPythonPackage rec {
+      pname = "edge-tts";
+      version = "7.0.2";
 
-let
-  py = pkgs.python311;
-in
-py.pkgs.buildPythonPackage rec {
-  pname = "edge-tts";
-  version = "6.1.12";
+      src = pkgs.fetchFromGitHub {
+        owner  = "rany2";
+        repo   = "edge-tts";
+        rev    = "${version}";                 # no “v”
+        sha256 = "123kpsimz5dmk85k95b87yr1qa9yxx4fah8hkc4r04627glah9k5";          # get real value below
+      };
 
-  # Build from the GitHub tarball so you always get the exact code
-  src = pkgs.fetchFromGitHub {
-    owner  = "rany2";
-    repo   = "edge-tts";
-    rev    = "v${version}";
-    sha256 = "sha256-8Q1mXg7qP/M2j52hU8dOQh9+9mQ=="; # <- nix-prefetch-url --unpack <tarball-url>
-  };
+      format = "pyproject";               # ← build from source, not wheel
+      nativeBuildInputs = with py.pkgs; [
+        setuptools
+        wheel
+      ];
 
-  propagatedBuildInputs = with py.pkgs; [
-    aiohttp
-    certifi
-    srt
-    tabulate
-    typing-extensions
+      propagatedBuildInputs = with py.pkgs; [
+        aiohttp
+        certifi
+        srt
+        tabulate
+        typing-extensions
+      ];
+
+      doCheck = false;
+      pythonImportsCheck = [ "edge_tts" ];
+    })
   ];
-
-  # CLI entry points
-  nativeBuildInputs = [ py.pkgs.setuptools py.pkgs.wheel ];
-  buildInputs = [ py.pkgs.pythonRelaxDepsHook ];
-
-  # No test suite in the repo
-  doCheck = false;
-
-  # Sanity check
-  pythonImportsCheck = [ "edge_tts" ];
-
-  meta = with pkgs.lib; {
-    description = "Use Microsoft Edge’s online TTS from Python without Edge/Windows/API key";
-    homepage    = "https://github.com/rany2/edge-tts";
-    license     = licenses.gpl3Only;
-    maintainers = with maintainers; [ ];
-  };
 }
