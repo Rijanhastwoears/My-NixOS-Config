@@ -13,10 +13,10 @@
     # This should ideally match the `system.stateVersion` in your configuration.nix.
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
 
-    lemFlake = {
-        url = "github:lem-project/lem"; 
-        inputs.nixpkgs.follows = "nixpkgs"; # Optional: ensure consistent nixpkgs
-    };
+    #lemFlake = {
+        #url = "github:lem-project/lem"; 
+        #inputs.nixpkgs.follows = "nixpkgs"; # Optional: ensure consistent nixpkgs
+    #};
     # The Home Manager flake. Home Manager is used to manage user-specific
     # configurations (dotfiles, packages, services).
     # We pin it to a branch compatible with our nixpkgs version (`release-24.11`).
@@ -36,7 +36,7 @@
   # Outputs define what your flake *provides*. This function takes 'self'
   # (a reference to this flake's own outputs) and all the defined 'inputs'.
   # The '@inputs' pattern conveniently makes all inputs available by name.
-  outputs = { self, nixpkgs, home-manager, lemFlake, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, ... }@inputs:
     let
       # Define the system architecture you are building for.
       # Common values: "x86_64-linux", "aarch64-linux", "x86_64-darwin", "aarch64-darwin".

@@ -58,7 +58,7 @@
   environment.systemPackages = with pkgs; [
     
     ## Custom package installed using someone else's flake
-    inputs.lemFlake.packages.${pkgs.system}.lem-ncurses
+    # inputs.lemFlake.packages.${pkgs.system}.lem-ncurses
     # vim
     # wget
   ];
