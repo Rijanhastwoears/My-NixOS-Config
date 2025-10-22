@@ -71,6 +71,7 @@
       nodePackages_latest.wrangler
       notcurses
       obs-studio
+      ollama
       onedriver
       openconnect
       pandoc
@@ -86,6 +87,7 @@
       samba4Full
       sbcl
       sioyek
+      slackdump
       sox
       spotify
       spotube
@@ -105,6 +107,7 @@
       valgrind
       vcftools
       vlc
+      vivaldi
       vscode-fhs
       waydroid
       wget
