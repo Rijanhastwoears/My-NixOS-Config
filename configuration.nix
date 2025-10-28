@@ -21,6 +21,7 @@
       ./modules/nixos/waydroid.nix
       # --- Custom Packages (Consider Overlays) ---
       ./personal/plink2.nix
+      ./personal/mzmine.nix
       ./personal/snpeff.nix
       ./personal/edgetts.nix
       # --- Home Manager (if not handled in flake.nix) ---
