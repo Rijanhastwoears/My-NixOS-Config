@@ -62,6 +62,7 @@
       mercurial
       mermaid-cli
       monophony
+      mkdocs
       mosh
       ncurses
       nim
