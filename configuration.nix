@@ -57,6 +57,7 @@
   services.xserver.displayManager.gdm.wayland = true;
   # System packages (keep minimal)
   environment.systemPackages = with pkgs; [
+    google-antigravity
     
     ## Custom package installed using someone else's flake
     # inputs.lemFlake.packages.${pkgs.system}.lem-ncurses

@@ -15,8 +15,13 @@
       system = "x86_64-linux";
       specialArgs = { inherit inputs; };
 
+      overlay = final: prev: {
+        google-antigravity = final.callPackage ./pkgs/antigravity/default.nix { };
+      };
+
       pkgs = import nixpkgs {
         inherit system;
+        overlays = [ overlay ];
 
         config = {
           allowUnfree = true;
