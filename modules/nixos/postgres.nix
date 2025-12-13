@@ -6,11 +6,12 @@
     enable = true;
     package = pkgs.postgresql_16;
     authentication = lib.mkOverride 10 ''
-      # Generated file; do not edit!
       # TYPE  DATABASE        USER            ADDRESS                 METHOD
-      local   all             all                                     trust
-      host    all             all             127.0.0.1/32            trust
-      host    all             all             ::1/128                 trust
+      # "peer" uses OS user for authentication (secure for local Unix sockets)
+      local   all             all                                     peer
+      # "scram-sha-256" requires password for network connections
+      host    all             all             127.0.0.1/32            scram-sha-256
+      host    all             all             ::1/128                 scram-sha-256
     '';
     # Add other postgres settings here if needed
     # initialScript = pkgs.writeText "postgres-init.sql" ''

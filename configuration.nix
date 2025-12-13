@@ -5,7 +5,6 @@
 {
   imports =
     [
-      ./hardware-configuration.nix
 
       # --- Core System Modules ---
       ./modules/nixos/locale.nix     # Moved (includes timezone & i18n)
@@ -19,11 +18,6 @@
       ./modules/nixos/printing.nix
       ./modules/nixos/xserver.nix    # Moved (includes xorg, gdm, gnome)
       ./modules/nixos/waydroid.nix
-      # --- Custom Packages (Consider Overlays) ---
-      ./personal/plink2.nix
-      ./personal/mzmine.nix
-      ./personal/snpeff.nix
-      ./personal/edgetts.nix
       # --- Home Manager (if not handled in flake.nix) ---
       # ./modules/home-manager/rijan.nix
     ];
@@ -44,7 +38,6 @@
     isNormalUser = true;
     extraGroups = [ "networkmanager" "wheel"]; # networkmanager group added by default if using networking.networkmanager module
     shell = pkgs.fish;
-    useDefaultShell = true;
   };
 
   # Home Manager setup (if not handled in flake.nix)
@@ -55,10 +48,14 @@
 
   # I have been told this is needed for waydroid
   services.xserver.displayManager.gdm.wayland = true;
-  # System packages (keep minimal)
+  # System packages (keep minimal, custom packages are in flake.nix overlay)
   environment.systemPackages = with pkgs; [
     google-antigravity
-    
+    plink2
+    mzmine
+    snpeff
+    edge-tts
+
     ## Custom package installed using someone else's flake
     # inputs.lemFlake.packages.${pkgs.system}.lem-ncurses
     # vim
