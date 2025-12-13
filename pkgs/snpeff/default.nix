@@ -2,11 +2,11 @@
 
 stdenv.mkDerivation {
   pname = "snptools";
-  version = "4.3t";
+  version = "5.4";
 
   src = fetchurl {
-    url = "https://snpeff.blob.core.windows.net/versions/snpEff_latest_core.zip";
-    sha256 = "445f4b73a723a018afbcbcbfe49c77c6771745f55cf662246bf265f53342d961";
+    url = "https://snpeff-public.s3.amazonaws.com/versions/snpEff_latest_core.zip";
+    sha256 = "0alalxyn7fal41xs0ygdsj9xinrn9qf781qqq0cjq31h02zx4sjg";
   };
 
   nativeBuildInputs = [ unzip makeWrapper ];
