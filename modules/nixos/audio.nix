@@ -2,8 +2,8 @@
 { config, pkgs, ... }:
 
 {
-  # Disable legacy PulseAudio daemon
-  hardware.pulseaudio.enable = false;
+  # Disable legacy PulseAudio daemon (using PipeWire instead)
+  services.pulseaudio.enable = false;
 
   # Enable RealtimeKit for low-latency audio scheduling
   security.rtkit.enable = true;

@@ -1,143 +1,250 @@
-{pkgs, ...}:
+# ╔══════════════════════════════════════════════════════════════════════════════╗
+# ║                         Home Manager Configuration                          ║
+# ║                               User: rijan                                    ║
+# ╚══════════════════════════════════════════════════════════════════════════════╝
+#
+# This module defines the user environment for 'rijan', including:
+#   • User packages (installed in ~/.nix-profile)
+#   • Application configurations
+#   • Shell integrations
+#
+# Changes here are applied when you run:
+#   sudo nixos-rebuild switch --flake .#nixos
+#
+# For available packages, search: https://search.nixos.org/packages
+
+{ pkgs, ... }:
 
 {
+  # ════════════════════════════════════════════════════════════════════════════
+  #                           Module Imports
+  # ════════════════════════════════════════════════════════════════════════════
+  # Split configurations for languages and complex setups into separate files.
 
   imports = [
-    ./python.nix
-    ./R.nix
+    ./python.nix  # Python with scientific packages
+    ./R.nix       # R and RStudio with packages
   ];
-    home.packages = with pkgs;
-     [
-      anki-bin
-      atuin
-      authenticator
-      autoconf269
-      automake115x
-      audacity
-      awscli2
-      backblaze-b2
-      bcftools
-      beeper
-      brave
-      bzip2
-      c2nim
-      calibre
-      canon-cups-ufr2
-      cargo
-      clementine
-      comma
-      csvlens
-      duckdb
-      emacs
-      firefox
-      fish
-      flutter
-      fzf
-      gccgo13
-      gdb
-      gimp
-      git
-      ghostty
-      glab
-      glibc
-      gnome-podcasts
-      gnumake42
-      helix
-      htslib
-      hugo
-      inetutils
-      inkscape
-      jdk17
-      jellyfin-ffmpeg
-      joplin-desktop
-      julia
-      kitty
-      kbfs
-      keybase
-      lazygit
-      libgcc
-      libreoffice
-      libsForQt5.kdenlive
-      logseq
-      mercurial
-      mermaid-cli
-      monophony
-      mkdocs
-      mosh
-      ncurses
-      nim
-      nimble
-      nimlangserver
-      neovim
-      nodePackages_latest.wrangler
-      notcurses
-      obs-studio
-      ollama
-      onedriver
-      openconnect
-      pandoc
-      perl
-      plink-ng
-      postgresql_16
-      protonvpn-gui
-      pyright
-      rclone
-      ripcord
-      ripgrep
-      rustc
-      samba4Full
-      sbcl
-      sioyek
-      slackdump
-      sox
-      spotify
-      spotube
-      sqlite-interactive
-      stow
-      syncthing
-      tangram
-      tesseract4
-      the-way
-      thunderbird
-      tinymist
-      tmux
-      tree
-      tor-browser
-      typst
-      unzip
-      valgrind
-      vcftools
-      vlc
-      vivaldi
-      vscode-fhs
-      waydroid
-      wget
-      xclip
-      xz
-      yazi
-      yt-dlp
-      ytdownloader
-      zellij
-      zig
-      zip
-      zlib
-      zlib.dev
-      zoom-us
-      zotero
+
+  # ════════════════════════════════════════════════════════════════════════════
+  #                           User Packages
+  # ════════════════════════════════════════════════════════════════════════════
+  # Packages installed for this user only. Organized by category for clarity.
+
+  home.packages = with pkgs; [
+    # ─────────────────────────────────────────────────────────────────────────
+    # Terminals & Shell Tools
+    # ─────────────────────────────────────────────────────────────────────────
+    fish
+    ghostty
+    kitty
+    tmux
+    zellij
+    atuin           # Shell history search
+    fzf             # Fuzzy finder
+    ripgrep         # Fast grep
+    tree
+    yazi            # Terminal file manager
+    lazygit
+
+    # ─────────────────────────────────────────────────────────────────────────
+    # Editors & IDEs
+    # ─────────────────────────────────────────────────────────────────────────
+    emacs
+    helix
+    neovim
+    vscode-fhs
+
+    # ─────────────────────────────────────────────────────────────────────────
+    # Web Browsers
+    # ─────────────────────────────────────────────────────────────────────────
+    brave
+    firefox
+    tangram
+    tor-browser
+    vivaldi
+
+    # ─────────────────────────────────────────────────────────────────────────
+    # Communication & Social
+    # ─────────────────────────────────────────────────────────────────────────
+    beeper
+    ripcord
+    thunderbird
+    zoom-us
+
+    # ─────────────────────────────────────────────────────────────────────────
+    # Media & Creative
+    # ─────────────────────────────────────────────────────────────────────────
+    audacity
+    clementine
+    gimp
+    inkscape
+    jellyfin-ffmpeg
+    libsForQt5.kdenlive
+    monophony
+    obs-studio
+    sox
+    spotify
+    spotube
+    vlc
+    yt-dlp
+    ytdownloader
+
+    # ─────────────────────────────────────────────────────────────────────────
+    # Documents & Reading
+    # ─────────────────────────────────────────────────────────────────────────
+    calibre
+    joplin-desktop
+    libreoffice
+    logseq
+    pandoc
+    sioyek          # PDF viewer
+    tesseract4      # OCR
+    typst
+    tinymist        # Typst LSP
+    zotero
+
+    # ─────────────────────────────────────────────────────────────────────────
+    # Development Tools
+    # ─────────────────────────────────────────────────────────────────────────
+    # Version Control
+    git
+    glab            # GitLab CLI
+    mercurial
+
+    # Build Tools
+    autoconf269
+    automake115x
+    gnumake42
+
+    # Compilers & Languages
+    cargo
+    rustc
+    gccgo13
+    nim
+    nimble
+    nimlangserver
+    julia
+    flutter
+    zig
+    sbcl            # Common Lisp
+    perl
+    c2nim
+
+    # Debugging & Profiling
+    gdb
+    valgrind
+
+    # Language Servers
+    pyright
+
+    # ─────────────────────────────────────────────────────────────────────────
+    # Databases
+    # ─────────────────────────────────────────────────────────────────────────
+    duckdb
+    postgresql_16
+    sqlite-interactive
+    csvlens
+
+    # ─────────────────────────────────────────────────────────────────────────
+    # Bioinformatics
+    # ─────────────────────────────────────────────────────────────────────────
+    bcftools
+    htslib
+    plink-ng
+    vcftools
+
+    # ─────────────────────────────────────────────────────────────────────────
+    # Cloud & Networking
+    # ─────────────────────────────────────────────────────────────────────────
+    awscli2
+    backblaze-b2
+    inetutils
+    mosh
+    nodePackages_latest.wrangler
+    openconnect
+    protonvpn-gui
+    rclone
+    slackdump
+    wget
+
+    # ─────────────────────────────────────────────────────────────────────────
+    # Desktop Applications
+    # ─────────────────────────────────────────────────────────────────────────
+    anki-bin
+    authenticator
+    gnome-podcasts
+    onedriver       # OneDrive client
+    syncthing
+    waydroid
+
+    # ─────────────────────────────────────────────────────────────────────────
+    # Utilities
+    # ─────────────────────────────────────────────────────────────────────────
+    bzip2
+    comma           # Run any package with ,
+    hugo            # Static site generator
+    kbfs
+    keybase
+    mermaid-cli
+    mkdocs
+    ncurses
+    notcurses
+    ollama          # Local LLMs
+    stow
+    the-way         # Code snippets
+    unzip
+    xclip
+    xz
+    zip
+
+    # ─────────────────────────────────────────────────────────────────────────
+    # System Libraries (sometimes needed for building)
+    # ─────────────────────────────────────────────────────────────────────────
+    glibc
+    jdk17
+    libgcc
+    samba4Full
+    zlib
+    zlib.dev
+
+    # ─────────────────────────────────────────────────────────────────────────
+    # Printers
+    # ─────────────────────────────────────────────────────────────────────────
+    canon-cups-ufr2
+  ];
+
+  # ════════════════════════════════════════════════════════════════════════════
+  #                        Program Configurations
+  # ════════════════════════════════════════════════════════════════════════════
+  # Some programs have dedicated Home Manager modules for richer configuration.
+
+  programs.atuin = {
+    enable = true;
+    enableFishIntegration = true;  # Ctrl+R history search in Fish
+  };
+
+  # ════════════════════════════════════════════════════════════════════════════
+  #                         Nixpkgs Configuration
+  # ════════════════════════════════════════════════════════════════════════════
+  # NOTE: These settings are also set in flake.nix for the system.
+  # We repeat them here because Home Manager has its own nixpkgs evaluation
+  # in some contexts.
+
+  nixpkgs.config = {
+    allowUnfree = true;
+
+    # Security: Only add packages here if you understand the CVE implications
+    permittedInsecurePackages = [
+      "electron-27.3.11"  # Required by: logseq
     ];
+  };
 
-    programs.atuin = {
-      enable = true;
-      enableFishIntegration = true;
-    };
+  # ════════════════════════════════════════════════════════════════════════════
+  #                            State Version
+  # ════════════════════════════════════════════════════════════════════════════
+  # IMPORTANT: Don't change after initial setup. This is for Home Manager's
+  # internal state management, not for upgrading.
 
-    nixpkgs.config.permittedInsecurePackages = [
-      "electron-27.3.11"
-    ];
-    # this should enable zsh as the default shell
-    
-    # Allow unfree packages
-    nixpkgs.config.allowUnfree = true;
-
-    home.stateVersion = "25.05";
+  home.stateVersion = "25.05";
 }

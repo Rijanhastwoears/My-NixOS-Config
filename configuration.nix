@@ -1,74 +1,157 @@
-# configuration.nix (or hosts/nixos/configuration.nix)
+# ╔══════════════════════════════════════════════════════════════════════════════╗
+# ║                         NixOS System Configuration                           ║
+# ╚══════════════════════════════════════════════════════════════════════════════╝
+#
+# This is the main configuration entry point for the NixOS system.
+# It imports modular configurations and defines core system settings.
+#
+# Structure:
+#   ./modules/nixos/     - System-level modules (services, hardware, etc.)
+#   ./modules/home-manager/ - User-level modules (packages, dotfiles, etc.)
+#   ./pkgs/              - Custom package definitions
+#
+# After making changes:
+#   sudo nixos-rebuild switch --flake .#nixos
 
-{ config, pkgs, lib, inputs,... }: # Ensure lib is available if needed
+{ config, pkgs, lib, inputs, ... }:
+# pkgs is provided by the NixOS module system with our overlays applied
 
 {
-  imports =
-    [
+  # ════════════════════════════════════════════════════════════════════════════
+  #                              Module Imports
+  # ════════════════════════════════════════════════════════════════════════════
+  # Each module encapsulates related configuration. This keeps the main config
+  # clean and makes it easy to enable/disable features.
 
-      # --- Core System Modules ---
-      ./modules/nixos/locale.nix     # Moved (includes timezone & i18n)
-      ./modules/nixos/networking.nix # Moved (includes hostname & networkmanager)
-      ./modules/nixos/bootloader.nix
-      # --- Services & Hardware ---
-      ./modules/nixos/audio.nix
-      ./modules/nixos/DNS.nix
-      ./modules/nixos/kbfs.nix       # Moved
-      ./modules/nixos/postgres.nix
-      ./modules/nixos/printing.nix
-      ./modules/nixos/xserver.nix    # Moved (includes xorg, gdm, gnome)
-      ./modules/nixos/waydroid.nix
-      # --- Home Manager (if not handled in flake.nix) ---
-      # ./modules/home-manager/rijan.nix
-    ];
+  imports = [
+    # ─────────────────────────────────────────────────────────────────────────
+    # Core System
+    # ─────────────────────────────────────────────────────────────────────────
+    ./modules/nixos/determinate.nix  # Determinate Nix performance settings
+    ./modules/nixos/bootloader.nix   # Systemd-boot configuration
+    ./modules/nixos/locale.nix       # Timezone & internationalization
+    ./modules/nixos/networking.nix   # Hostname & NetworkManager
 
-  # --- Remaining Configuration ---
-  # (Should be getting smaller!)
+    # ─────────────────────────────────────────────────────────────────────────
+    # Hardware & Services
+    # ─────────────────────────────────────────────────────────────────────────
+    ./modules/nixos/audio.nix        # PipeWire audio stack
+    ./modules/nixos/DNS.nix          # Custom DNS (Cloudflare Family)
+    ./modules/nixos/printing.nix     # CUPS & network printing
+    ./modules/nixos/xserver.nix      # X11, GDM, GNOME
 
-  # Nix Flakes settings
-  nix = {
-    package = pkgs.nixVersions.stable;
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
-  };
+    # ─────────────────────────────────────────────────────────────────────────
+    # Applications & Virtualization
+    # ─────────────────────────────────────────────────────────────────────────
+    ./modules/nixos/kbfs.nix         # Keybase filesystem
+    ./modules/nixos/postgres.nix     # PostgreSQL database
+    ./modules/nixos/waydroid.nix     # Android container
+  ];
 
-  # User account definition (Could be moved to users.nix module later)
+  # ════════════════════════════════════════════════════════════════════════════
+  #                              User Account
+  # ════════════════════════════════════════════════════════════════════════════
+  # Primary user account definition. Groups grant specific permissions:
+  #   • wheel: sudo access
+  #   • networkmanager: network configuration without sudo
+
   users.users.rijan = {
     isNormalUser = true;
-    extraGroups = [ "networkmanager" "wheel"]; # networkmanager group added by default if using networking.networkmanager module
+    description = "Rijan";
+    extraGroups = [
+      "wheel"          # Sudo access
+      "networkmanager" # Network configuration
+    ];
     shell = pkgs.fish;
   };
 
-  # Home Manager setup (if not handled in flake.nix)
+  # ════════════════════════════════════════════════════════════════════════════
+  #                             Home Manager
+  # ════════════════════════════════════════════════════════════════════════════
+  # Home Manager manages user-specific packages and configuration.
+  # It's integrated as a NixOS module for atomic system+user updates.
+
   home-manager.users.rijan = import ./modules/home-manager/rijan.nix;
 
-  # Fish shell program enable (might be better in home-manager)
+  # ════════════════════════════════════════════════════════════════════════════
+  #                            Shell Configuration
+  # ════════════════════════════════════════════════════════════════════════════
+  # Enable Fish shell system-wide. This is needed even though the user's
+  # shell is set to Fish above, as NixOS needs to add it to /etc/shells.
+
   programs.fish.enable = true;
 
-  # I have been told this is needed for waydroid
+  # ════════════════════════════════════════════════════════════════════════════
+  #                         Display Manager Settings
+  # ════════════════════════════════════════════════════════════════════════════
+  # Enable Wayland in GDM for Waydroid compatibility.
+  # Waydroid requires a Wayland compositor to function.
+
   services.xserver.displayManager.gdm.wayland = true;
-  # System packages (keep minimal, custom packages are in flake.nix overlay)
+
+  # ════════════════════════════════════════════════════════════════════════════
+  #                           System Packages
+  # ════════════════════════════════════════════════════════════════════════════
+  # Packages installed system-wide. These are available to all users.
+  # Custom packages from ./pkgs/ are made available via the flake overlay.
+  #
+  # NOTE: Prefer adding packages to home-manager for user-specific packages.
+  # System packages should be reserved for system-wide tools.
+
   environment.systemPackages = with pkgs; [
+    # Custom packages (defined in ./pkgs/)
     google-antigravity
     plink2
     mzmine
     snpeff
     edge-tts
-
-    ## Custom package installed using someone else's flake
-    # inputs.lemFlake.packages.${pkgs.system}.lem-ncurses
-    # vim
-    # wget
   ];
 
-  # System Auto Upgrade (Corrected Placement)
-  system.autoUpgrade.enable = true;
-  system.autoUpgrade.allowReboot = true;
+  # ════════════════════════════════════════════════════════════════════════════
+  #                            System Maintenance
+  # ════════════════════════════════════════════════════════════════════════════
+  # Automatic system updates. The system will update and optionally reboot
+  # when new updates are available.
+  #
+  # NOTE: Determinate Nix handles garbage collection automatically, so
+  # manual nix.gc settings are not needed.
 
-  # System state version - VERY IMPORTANT
-  system.stateVersion = "25.05"; # Or your actual state version
+  system.autoUpgrade = {
+    enable = true;
+    allowReboot = true;
+    # flake = "github:your-username/My-NixOS-Config";  # Optional: update from git
+  };
 
-  # --- REMOVED SECTIONS ---
-  # All sections corresponding to the new modules created above should be gone from here.
+  # ════════════════════════════════════════════════════════════════════════════
+  #                             State Version
+  # ════════════════════════════════════════════════════════════════════════════
+  # IMPORTANT: Do not change this value after initial installation!
+  # This determines the NixOS release that this configuration is compatible with.
+  # Changing it can break stateful services that depend on the version.
+  #
+  # To upgrade NixOS: Update the nixpkgs input in flake.nix instead.
+
+  system.stateVersion = "25.05";
+
+  # ════════════════════════════════════════════════════════════════════════════
+  #                          Nix Configuration
+  # ════════════════════════════════════════════════════════════════════════════
+  # NOTE: Nix configuration is now managed by Determinate Nix!
+  #
+  # Determinate Nix automatically configures:
+  #   • Flakes and nix-command (experimental features)
+  #   • Optimal settings for performance
+  #   • Garbage collection
+  #
+  # Custom settings can be added via:
+  #   • ./modules/nixos/determinate.nix (determinate-nix.customSettings)
+  #   • Directly in /etc/nix/nix.custom.conf
+  #
+  # The old manual configuration has been removed:
+  # ┌────────────────────────────────────────────────────────────────────────┐
+  # │  nix = {                                                               │
+  # │    package = pkgs.nixVersions.stable;                                  │
+  # │    extraOptions = ''experimental-features = nix-command flakes'';      │
+  # │  };                                                                    │
+  # └────────────────────────────────────────────────────────────────────────┘
 }
