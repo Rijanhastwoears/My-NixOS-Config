@@ -6,42 +6,52 @@
 # It provides performance improvements and quality-of-life features not yet
 # available in upstream Nix.
 #
-# Key Features (enabled by default):
+# Features Enabled by Default:
 #   • Lazy Trees: Only copies files that expressions actually need (3-20x faster)
 #   • Managed GC: Automatic garbage collection to maintain disk space
 #   • FlakeHub Cache: Access to pre-built binaries for faster builds
-#   • Flakes & nix-command enabled by default
+#   • Flakes & nix-command: Enabled out of the box
 #
-# Optional Feature (requires manual setup):
+# Additional Feature Enabled Below:
 #   • Parallel Evaluation: Spreads Nix evaluation across multiple CPU cores
 #
 # Documentation: https://docs.determinate.systems/determinate-nix
-#
-# ════════════════════════════════════════════════════════════════════════════════
-#                         Custom Configuration
-# ════════════════════════════════════════════════════════════════════════════════
-#
-# Determinate Nix manages /etc/nix/nix.conf itself. To add custom settings,
-# create or edit /etc/nix/nix.custom.conf
-#
-# Example: Enable parallel evaluation (uses all CPU cores)
-#
-#   sudo tee /etc/nix/nix.custom.conf << 'EOF'
-#   # Use all cores for parallel evaluation (0 = auto, 1 = disabled)
-#   eval-cores = 0
-#   EOF
-#
-# After adding custom settings, restart the Nix daemon:
-#   sudo systemctl restart nix-daemon
 #
 # ════════════════════════════════════════════════════════════════════════════════
 
 { config, lib, ... }:
 
 {
-  # The Determinate NixOS module (determinate.nixosModules.default) is loaded
-  # directly in flake.nix. This file serves as documentation and a placeholder
-  # for any future NixOS-level configuration that complements Determinate Nix.
-  
-  # No additional configuration needed - Determinate Nix works out of the box!
+  # ════════════════════════════════════════════════════════════════════════════
+  #                      Custom Nix Configuration
+  # ════════════════════════════════════════════════════════════════════════════
+  # Determinate Nix manages /etc/nix/nix.conf itself. Custom settings must be
+  # placed in /etc/nix/nix.custom.conf, which we manage declaratively here.
+
+  environment.etc."nix/nix.custom.conf" = {
+    text = ''
+      # ═══════════════════════════════════════════════════════════════════════
+      #                    Determinate Nix Custom Settings
+      # ═══════════════════════════════════════════════════════════════════════
+      # This file is managed by NixOS (modules/nixos/determinate.nix)
+      # Do not edit manually - changes will be overwritten on rebuild.
+
+      # ─────────────────────────────────────────────────────────────────────────
+      # Parallel Evaluation
+      # ─────────────────────────────────────────────────────────────────────────
+      # Distributes Nix evaluation work across multiple CPU cores.
+      # This dramatically speeds up operations like:
+      #   • nix search
+      #   • nix flake check
+      #   • nix flake show
+      #   • nix eval
+      #
+      # Values:
+      #   0 = Use all available cores (recommended)
+      #   1 = Disable parallel evaluation (single-threaded)
+      #   N = Use exactly N cores
+      eval-cores = 0
+    '';
+    mode = "0644";
+  };
 }
