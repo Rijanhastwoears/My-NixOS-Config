@@ -119,7 +119,15 @@
   system.autoUpgrade = {
     enable = true;
     allowReboot = true;
-    # flake = "github:your-username/My-NixOS-Config";  # Optional: update from git
+    
+    # Pull updates from your GitHub repo
+    flake = "github:Rijan2055/My-NixOS-Config#nixos";
+    
+    # Run daily at 4 AM
+    dates = "04:00";
+    
+    # Only reboot for kernel/initrd changes (optional, less disruptive)
+    # rebootWindow = { lower = "03:00"; upper = "05:00"; };
   };
 
   # ════════════════════════════════════════════════════════════════════════════
