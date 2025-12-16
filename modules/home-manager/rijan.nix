@@ -130,7 +130,7 @@
     sbcl            # Common Lisp
     perl
     c2nim
-
+    uv
     # Debugging & Profiling
     gdb
     valgrind
