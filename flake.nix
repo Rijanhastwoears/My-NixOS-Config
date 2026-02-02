@@ -132,6 +132,7 @@
                 # Only add packages here after understanding the security implications.
                 permittedInsecurePackages = [
                   "electron-27.3.11"  # Required by: logseq
+                  "electron-36.9.5"   # Required by: rstudio
                 ];
               };
             };

@@ -177,6 +177,7 @@
     onedriver       # OneDrive client
     syncthing
     waydroid
+    xournalpp
 
     # ─────────────────────────────────────────────────────────────────────────
     # Utilities
@@ -237,6 +238,7 @@
     # Security: Only add packages here if you understand the CVE implications
     permittedInsecurePackages = [
       "electron-27.3.11"  # Required by: logseq
+      "electron-36.9.5"   # Required by: rstudio
     ];
   };
 
