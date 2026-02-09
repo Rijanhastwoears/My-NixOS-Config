@@ -53,16 +53,16 @@
     emacs
     helix
     neovim
+    opencode
     vscode-fhs
+    zed-editor
 
     # ─────────────────────────────────────────────────────────────────────────
     # Web Browsers
     # ─────────────────────────────────────────────────────────────────────────
     brave
     firefox
-    tangram
     tor-browser
-    vivaldi
 
     # ─────────────────────────────────────────────────────────────────────────
     # Communication & Social
