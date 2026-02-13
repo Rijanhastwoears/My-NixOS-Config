@@ -122,6 +122,7 @@
     # Compilers & Languages
     cargo
     rustc
+    racket
     gccgo13
     nim
     nimble
