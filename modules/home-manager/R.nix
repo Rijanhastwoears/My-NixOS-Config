@@ -30,7 +30,7 @@
       viridis
       svglite
       purrr
-      phylotools
+      # phylotools  # Currently broken in nixos-unstable
     ];
     
     RStudio-with-my-packages = rstudioWrapper.override{

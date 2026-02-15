@@ -82,7 +82,7 @@
     gimp
     inkscape
     jellyfin-ffmpeg
-    libsForQt5.kdenlive
+    kdePackages.kdenlive
     monophony
     obs-studio
     sox
@@ -115,9 +115,9 @@
     mercurial
 
     # Build Tools
-    autoconf269
-    automake115x
-    gnumake42
+    autoconf
+    automake
+    gnumake
 
     # Compilers & Languages
     cargo
@@ -192,7 +192,7 @@
     keybase
     mermaid-cli
     mkdocs
-    ncurses
+    # ncurses  # Conflicts with ghostty's terminfo; already available as a system dependency
     notcurses
     ollama          # Local LLMs
     stow

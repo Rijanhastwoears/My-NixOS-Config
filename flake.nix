@@ -45,9 +45,9 @@
     # ─────────────────────────────────────────────────────────────────────────
     # Nixpkgs: The Nix Packages collection
     # ─────────────────────────────────────────────────────────────────────────
-    # Using the stable 25.05 branch for reliability.
-    # To use unstable: github:NixOS/nixpkgs/nixos-unstable
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    # Using nixos-unstable for the latest tested packages.
+    # nixos-25.05 will become the stable option when released (~May 2026).
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     # ─────────────────────────────────────────────────────────────────────────
     # Home Manager: Declarative user environment management
@@ -55,7 +55,7 @@
     # Manages dotfiles, user packages, and per-user services declaratively.
     # The `follows` directive ensures Home Manager uses our nixpkgs version.
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
