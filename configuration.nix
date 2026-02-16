@@ -15,7 +15,6 @@
     ./modules/nixos/xserver.nix
 
     # Applications
-    ./modules/nixos/kbfs.nix
     ./modules/nixos/postgres.nix
     ./modules/nixos/waydroid.nix
   ];

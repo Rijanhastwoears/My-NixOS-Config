@@ -138,8 +138,6 @@
     bzip2
     comma
     hugo
-    kbfs
-    keybase
     mermaid-cli
     mkdocs
     # ncurses  # Conflicts with ghostty's terminfo
