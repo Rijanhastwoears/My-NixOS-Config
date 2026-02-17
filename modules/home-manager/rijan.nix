@@ -13,6 +13,7 @@
     kitty
     tmux
     zellij
+    jujutsu
     atuin
     fzf
     ripgrep
@@ -67,6 +68,8 @@
     typst
     tinymist
     zotero
+    languagetool # For grammar checking
+    vale # For style checking
 
     # Development — Version Control
     git
@@ -93,6 +96,7 @@
     perl
     c2nim
     uv
+    pixi
 
     # Development — Debugging
     gdb
