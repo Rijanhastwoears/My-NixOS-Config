@@ -149,6 +149,7 @@
     ollama
     stow
     the-way
+    poppler
     unzip
     xclip
     xz
