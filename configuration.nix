@@ -37,7 +37,6 @@
   # Custom packages (defined in ./pkgs/)
   environment.systemPackages = with pkgs; [
     google-antigravity
-    moly-ai
     plink2
     mzmine
     snpeff
