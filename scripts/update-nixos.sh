@@ -1,14 +1,12 @@
 #!/usr/bin/env bash
 # Updates NixOS: flake update → rebuild → boot → garbage collect.
 #
-# Usage:
-#   ./update-nixos.sh          # Keep last 2 generations (default)
-#   ./update-nixos.sh 5        # Keep last 5 generations
+# Usage:  sudo ./update-nixos.sh
 
 set -euo pipefail
 
 FLAKE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-KEEP_GENERATIONS="${1:-2}"
+
 LOG_FILE="/tmp/nixos-update-$(date +%Y%m%d-%H%M%S).log"
 
 RED='\033[0;31m'
@@ -37,7 +35,6 @@ fi
 
 echo -e "${GREEN}NixOS Update${NC} — $(date)"
 echo -e "Flake:       ${FLAKE_DIR}"
-echo -e "Keeping:     last ${KEEP_GENERATIONS} generation(s)"
 echo -e "Error log:   ${LOG_FILE}"
 
 step "1/4  Updating flake inputs"
@@ -61,12 +58,12 @@ else
     fail "nixos-rebuild boot failed"
 fi
 
-step "4/4  Garbage collection (keeping last ${KEEP_GENERATIONS})"
+step "4/4  Garbage collection"
 
-if run nix profile wipe-history --profile /nix/var/nix/profiles/system --older-than "${KEEP_GENERATIONS}"; then
-    ok "System profile history cleaned"
+if run nix-env --delete-generations old --profile /nix/var/nix/profiles/system; then
+    ok "Old system generations deleted"
 else
-    warn "System profile wipe-history failed (non-fatal)"
+    warn "System generation cleanup failed (non-fatal)"
 fi
 
 for profile_dir in /home/*/. ; do
@@ -74,7 +71,7 @@ for profile_dir in /home/*/. ; do
     for profile in "/home/${user}/.local/state/nix/profiles/profile" \
                    "/home/${user}/.local/state/nix/profiles/home-manager"; do
         if [[ -e "$profile" ]]; then
-            if run nix profile wipe-history --profile "$profile" --older-than "${KEEP_GENERATIONS}"; then
+            if run nix-env --delete-generations old --profile "$profile"; then
                 ok "Cleaned profile: ${profile}"
             else
                 warn "Failed to clean: ${profile} (non-fatal)"
