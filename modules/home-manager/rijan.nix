@@ -10,7 +10,6 @@
     # Terminals & Shell
     fish
     ghostty
-    kitty
     tmux
     zellij
     jujutsu
@@ -27,7 +26,6 @@
     helix
     neovim
     opencode
-    vscode-fhs
     zed-editor
 
     # Browsers
@@ -73,7 +71,6 @@
 
     # Development — Version Control
     git
-    glab
     mercurial
 
     # Development — Build Tools
