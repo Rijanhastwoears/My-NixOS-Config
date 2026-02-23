@@ -23,6 +23,7 @@
         mzmine             = final.callPackage ./pkgs/mzmine/default.nix { };
         snpeff             = final.callPackage ./pkgs/snpeff/default.nix { };
         edge-tts           = final.callPackage ./pkgs/edge-tts/default.nix { };
+        ferrite            = final.callPackage ./pkgs/ferrite/default.nix { };
       };
 
     in

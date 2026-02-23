@@ -41,6 +41,7 @@
     mzmine
     snpeff
     edge-tts
+    ferrite
   ];
 
   system.autoUpgrade = {
