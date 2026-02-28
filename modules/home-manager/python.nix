@@ -3,7 +3,7 @@
 {
   home.packages = with pkgs;
   let
-    python-with-my-packages = python3.withPackages (ps: with ps; [
+    python-with-my-packages = python312.withPackages (ps: with ps; [
       numpy
       pandas
       matplotlib
