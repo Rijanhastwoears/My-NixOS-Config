@@ -155,9 +155,10 @@
     glibc
     jdk17
     libgcc
-    samba4full
+    samba4Full
     zlib
     zlib.dev
+    mkdocs
 
     # Misc
     filen-cli
