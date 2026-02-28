@@ -155,7 +155,6 @@
     glibc
     jdk17
     libgcc
-    samba4Full
     zlib
     zlib.dev
 
