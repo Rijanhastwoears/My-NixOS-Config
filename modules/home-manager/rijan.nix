@@ -140,7 +140,6 @@
     comma
     hugo
     mermaid-cli
-    mkdocs
     # ncurses  # Conflicts with ghostty's terminfo
     notcurses
     ollama
