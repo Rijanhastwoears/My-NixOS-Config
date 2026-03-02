@@ -166,7 +166,13 @@
 
     # Printers
     canon-cups-ufr2
+
+    # Fonts
+    nerd-fonts.tinos
+    atkinson-hyperlegible-mono
   ];
+
+
 
   programs.atuin = {
     enable = true;
@@ -176,6 +182,9 @@
   nixpkgs.config = {
     allowUnfree = true;
   };
+
+  fonts.fontconfig.enable = true;
+
 
   # Do NOT change after initial setup
   home.stateVersion = "25.05";
