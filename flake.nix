@@ -26,8 +26,25 @@
         ferrite            = final.callPackage ./pkgs/ferrite/default.nix { };
       };
 
+      pkgs = import nixpkgs {
+        inherit system;
+        overlays = [ customOverlay ];
+        config.allowUnfree = true;
+      };
+
     in
     {
+      # Expose custom packages so nix-update --flake can find them
+      packages.${system} = {
+        inherit (pkgs)
+          google-antigravity
+          plink2
+          mzmine
+          snpeff
+          edge-tts
+          ferrite;
+      };
+
       nixosConfigurations."nixos" = nixpkgs.lib.nixosSystem {
         inherit system;
 
