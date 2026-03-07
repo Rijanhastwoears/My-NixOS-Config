@@ -35,17 +35,12 @@ Use [nix-update](https://github.com/Mic92/nix-update) to bump them automatically
 | `ferrite` | GitHub (OlaProeis/Ferrite) | ✅ Fully automatic |
 | `edge-tts` | GitHub (rany2/edge-tts) | ✅ Fully automatic |
 | `mzmine` | GitHub release (mzmine/mzmine) | ⚠️ Semi-auto (uses `--url` hint) |
-| `google-antigravity` | Google CDN | ❌ Pass version manually |
-| `plink2` | S3 | ❌ Pass version manually |
-| `snpeff` | S3 | ❌ Pass version manually |
+| `google-antigravity` | RPM repo (Google Artifact Registry) | ✅ Auto via RPM repo metadata |
+| `plink2` | S3 | ❌ Fully manual |
+| `snpeff` | S3 | ❌ Fully manual |
 
-For packages that require a manual version:
-
-```bash
-./update-pkgs.sh google-antigravity --version=1.12.0-XXXX
-./update-pkgs.sh plink2 --version=...
-./update-pkgs.sh snpeff --version=...
-```
+For packages marked fully manual, update `version`, `url`, and `hash` by hand.
+Use `nix-prefetch-url <new-url>` to compute the new hash.
 
 ### One-off usage (without the script)
 

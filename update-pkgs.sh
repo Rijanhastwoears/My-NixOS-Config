@@ -28,12 +28,11 @@ update edge-tts          # fetchFromGitHub: rany2/edge-tts
 # -- Semi-automatic (need --url hint for version detection) --
 update mzmine --url https://github.com/mzmine/mzmine
 
-# -- Manual-version packages --
-# antigravity: Google CDN, no auto version detection.
-#   Pass version explicitly, e.g.:
-#   ./update-pkgs.sh google-antigravity --version=1.12.0-XXXX
+
+
+# -- Fully manual packages (no automated repo to query) --
 echo ""
-echo "=== Skipped packages (require manual version) ==="
-echo "  google-antigravity  — run: ./update-pkgs.sh google-antigravity --version=X.Y.Z-BUILD"
-echo "  plink2              — run: ./update-pkgs.sh plink2 --version=..."
-echo "  snpeff              — run: ./update-pkgs.sh snpeff --version=..."
+echo "=== Skipped packages (require fully manual update) ==="
+echo "  plink2  — S3 URL; update version + URL + hash by hand"
+echo "  snpeff  — S3 URL; update version + URL + hash by hand"
+

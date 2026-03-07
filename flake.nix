@@ -18,7 +18,6 @@
       system = "x86_64-linux";
 
       customOverlay = final: prev: {
-        google-antigravity = final.callPackage ./pkgs/antigravity/default.nix { };
         plink2             = final.callPackage ./pkgs/plink2/default.nix { };
         mzmine             = final.callPackage ./pkgs/mzmine/default.nix { };
         snpeff             = final.callPackage ./pkgs/snpeff/default.nix { };
@@ -37,7 +36,6 @@
       # Expose custom packages so nix-update --flake can find them
       packages.${system} = {
         inherit (pkgs)
-          google-antigravity
           plink2
           mzmine
           snpeff

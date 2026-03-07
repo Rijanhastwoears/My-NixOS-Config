@@ -170,6 +170,10 @@
     # Fonts
     nerd-fonts.tinos
     atkinson-hyperlegible-mono
+
+    nix-update
+    affine
+    antigravity-fhs
   ];
 
 

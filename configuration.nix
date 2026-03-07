@@ -34,9 +34,8 @@
   # Required for Waydroid
   services.xserver.displayManager.gdm.wayland = true;
 
-  # Custom packages (defined in ./pkgs/)
   environment.systemPackages = with pkgs; [
-    google-antigravity
+    antigravity-fhs
     plink2
     mzmine
     snpeff
