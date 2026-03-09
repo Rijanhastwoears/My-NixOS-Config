@@ -174,6 +174,9 @@
     nix-update
     affine
     antigravity-fhs
+
+    #window manager
+    sway
   ];
 
 

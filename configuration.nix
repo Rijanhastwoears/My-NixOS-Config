@@ -35,7 +35,6 @@
   services.xserver.displayManager.gdm.wayland = true;
 
   environment.systemPackages = with pkgs; [
-    antigravity-fhs
     plink2
     mzmine
     snpeff
