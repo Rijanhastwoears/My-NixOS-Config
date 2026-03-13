@@ -19,6 +19,8 @@
     ./modules/nixos/waydroid.nix
   ];
 
+  programs.nix-ld.enable = true;
+
   users.users.rijan = {
     isNormalUser = true;
     description = "Rijan";
