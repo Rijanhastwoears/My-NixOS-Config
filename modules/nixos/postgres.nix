@@ -4,6 +4,16 @@
   services.postgresql = {
     enable = true;
     package = pkgs.postgresql_16;
+    ensureUsers = [
+      {
+        name = "rijan";
+        ensureClauses = {
+          superuser = true;
+          login = true;
+        };
+      }
+    ];
+    ensureDatabases = [ "rijan" ];
     authentication = lib.mkOverride 10 ''
       # TYPE  DATABASE  USER  ADDRESS        METHOD
       local   all       all                  peer
